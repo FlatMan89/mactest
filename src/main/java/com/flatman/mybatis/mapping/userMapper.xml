@@ -8,14 +8,22 @@
 		resultType="me.gacl.domain.User"就表示将查询结果封装成一个User类的对象返回
 		User类就是users表所对应的实体类
 	-->
+	
+	
+	
 	<!-- 查找全部user -->
+	<!-- 查找全部 -->
+	<select id="findAll" resultType="User">
+		select * from user
+	</select>
+	
 	<!-- 根据id查询得到一个user对象 -->
-	<select id="getUser" parameterType="int" resultType="com.flatman.entity.User">
-		select * from users where id=#{id}
+	<select id="getUser" parameterType="int" resultType="User">
+		select * from user where id=#{id}
 	</select>
 	<!-- 插入 -->
-	<insert id="insertUser" useGeneratedKeys="true" keyProperty="id" parameterType="com.flatman.entity.User">
-		insert into users(id,name,age,username,password)
+	<insert id="insertUser" useGeneratedKeys="true" keyProperty="id" parameterType="User">
+		insert into user(id,name,age,username,password)
 		values(#{id},#{name},#{age},#{username},#{password})
 	</insert>	
 	

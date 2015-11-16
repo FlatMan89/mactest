@@ -1,6 +1,7 @@
 package com.flatman.test;
 
 import java.io.InputStream;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -23,9 +24,9 @@ public class MybatisTest {
 		//创建能执行映射文件中sql的sqlSession
 		SqlSession session = sessionFactory.openSession();
 		
-		String statement = "com.flatman.mybatis.mapping.userMapper.getUser";
+		String statement = dof("getUser");
 		
-		User user = session.selectOne(statement, 1);
+		User user = session.selectOne(statement, 6);
 		System.out.println(user);
 		
 		// 插入一条数据
@@ -33,16 +34,27 @@ public class MybatisTest {
 		u1.setAge(29);
 		u1.setName("张三");
 		u1.setUsername("zhangsan");
-		u1.setPassword("zhangsan");
+		u1.setPassword("");
 		
-		statement = "com.flatman.mybatis.mapping.userMapper.insertUser";
+		statement = dof("insertUser");
 		session.insert(statement,u1);
+		
+		statement = dof("findAll");
+		List<User> users = session.selectList(statement);
+		
+		for (User user2 : users) {
+			System.out.println(user2);
+		}
 		
 		session.commit();
 		
 		session.close();
 		
 		
+	}
+	
+	public static String dof(String doSome){
+		return "com.flatman.mybatis.mapping.userMapper."+doSome;
 	}
 
 }
